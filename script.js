@@ -36,20 +36,6 @@ function announce(string) {
     display.textContent = string;
 }
 
-function checkMultipleDecimals(string) {
-    if(string.indexOf('.') === -1) {
-        return false;
-    }
-    let position = string.indexOf('.') + 1;
-    let possible = string.indexOf('.', position);
-    if(possible > -1) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
 let displayString = '';
 let numA = null;
 let numB = null;
@@ -67,7 +53,11 @@ numButtons.forEach((button) => {
             displayString = '';
             funcOperate = false;
         }
-        if(!(button.textContent === "." && displayString.indexOf(".") > -1)) {
+        if(button.textContent === '←') {
+            displayString = displayString.substr(0, displayString.length - 1);
+            announce(displayString);
+        }
+        else if(!(button.textContent === "." && displayString.indexOf(".") > -1)) {
             if(button.textContent === '.' && displayString === '') {
                 displayString += 0;
             }
@@ -81,9 +71,8 @@ const funcContainer = document.querySelector('#functioncontainer');
 const funcButtons = funcContainer.querySelectorAll('button');
 funcButtons.forEach((button) => {
   
-    // and for each one we add a 'click' listener
     button.addEventListener('click', (e) => {
-        if(!(numA === null) && !(displayString === '')) {
+        if(!(numA === null) && !(displayString === '') && !(operator === '')) {
             readyToOperate = true;
         }
         switch(button.id) {
@@ -102,6 +91,9 @@ funcButtons.forEach((button) => {
                     else {
                         displayString = operate(operator, numA, numB);
                         announce(displayString);
+                        numA = Number(displayString);
+                        numB = null;
+                        operator = '';
                     }
                     readyToOperate = false;
                 }
@@ -132,3 +124,4 @@ funcButtons.forEach((button) => {
         }
     });
 });
+
