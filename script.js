@@ -67,11 +67,10 @@ numButtons.forEach((button) => {
             displayString = '';
             funcOperate = false;
         }
-
-        if(button.textContent === "." && checkMultipleDecimals(displayString) === true) {
-            console.log("Not doing anything");
-        }
-        else {
+        if(!(button.textContent === "." && displayString.indexOf(".") > -1)) {
+            if(button.textContent === '.' && displayString === '') {
+                displayString += 0;
+            }
             displayString += button.textContent; 
             announce(displayString); 
         }
