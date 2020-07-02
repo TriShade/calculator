@@ -1,0 +1,40 @@
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: top;
+}
+
+#calculator {
+    margin: auto;
+    width: 25%;
+    background-color: #283618;
+    padding: 20px;
+    color: #606C38;
+}
+
+#displaycontainer {
+    background-color: #FEFAE0;
+    height: 30px;
+}
+
+#display {
+    padding: 10px;
+}
+
+button {
+    padding: 16px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+   }
+
+#functioncontainer button {
+    background-color: #BC6C25;
+}
+
+#numbers button {
+    background-color: #DDA15E;
+}
