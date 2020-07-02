@@ -36,6 +36,68 @@ function announce(string) {
     display.textContent = string;
 }
 
+function clearEverything() {
+    numA = null;
+    numB = null;
+    operator = '';
+    displayString = '';
+    readyToOperate = false;
+    announce(displayString);
+}
+
+function runEquals() {
+    if(readyToOperate === true) {
+        numB = Number(displayString);
+        if(operator === 'divide' && numB === 0){
+            alert("Nice try, bud");
+            clearEverything();
+        }
+        else {
+            displayString = operate(operator, numA, numB);
+            announce(displayString);
+            numA = Number(displayString);
+            numB = null;
+            operator = '';
+        }
+        readyToOperate = false;
+    }
+}
+
+function runOperator(buttonID) {
+    if (readyToOperate === true) {
+        numB = Number(displayString);
+        displayString = operate(operator, numA, numB);
+        announce(displayString);
+        operator = buttonID;
+        numA = displayString;  
+        readyToOperate = false;
+        funcOperate = true;      
+    }
+    else {
+        numA = Number(displayString);
+        displayString = '';
+        operator = buttonID;
+    }
+}
+
+function addInput(buttonContent) {
+    if(funcOperate === true) {
+        displayString = '';
+        funcOperate = false;
+    }
+    if(buttonContent === '←') {
+        displayString = displayString.substr(0, displayString.length - 1);
+        announce(displayString);
+    }
+    else if(!(buttonContent === "." && displayString.indexOf(".") > -1)) {
+        if(buttonContent === '.' && displayString === '') {
+            displayString += 0;
+        }
+        displayString += buttonContent; 
+        announce(displayString); 
+    }
+}
+
 let displayString = '';
 let numA = null;
 let numB = null;
@@ -49,23 +111,52 @@ const numButtons = numContainer.querySelectorAll('button');
 
 numButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
-        if(funcOperate === true) {
-            displayString = '';
-            funcOperate = false;
-        }
-        if(button.textContent === '←') {
-            displayString = displayString.substr(0, displayString.length - 1);
-            announce(displayString);
-        }
-        else if(!(button.textContent === "." && displayString.indexOf(".") > -1)) {
-            if(button.textContent === '.' && displayString === '') {
-                displayString += 0;
-            }
-            displayString += button.textContent; 
-            announce(displayString); 
-        }
+        addInput(button.textContent);
     });
 });
+
+
+const inputKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", '.'];
+const funcKeys = ["+", '-', '/', '*'];
+
+
+window.addEventListener('keydown', function (e) {
+    if(inputKeys.includes(e.key)) {
+        addInput(e.key);
+    }
+    else if(e.key === 'c') {
+        clearEverything();
+    }
+    else if(e.key === 'Backspace') {
+        displayString = displayString.substr(0, displayString.length - 1);
+        announce(displayString);
+    }
+    else if(e.key === '=') {
+        if(!(numA === null) && !(displayString === '') && !(operator === '')) {
+            readyToOperate = true;
+        }
+        runEquals();
+    }
+    else if(funcKeys.includes(e.key)) {
+        if(!(numA === null) && !(displayString === '') && !(operator === '')) {
+            readyToOperate = true;
+        }
+        switch (e.key) {
+            case '+':
+                runOperator('add');
+                break;
+            case '-':
+                runOperator('subtract');
+                break;
+            case '/':
+                runOperator('divide');
+                break;
+            case '*':
+                runOperator('multiply');
+                break;
+        }
+    }
+  });
 
 const funcContainer = document.querySelector('#functioncontainer');
 const funcButtons = funcContainer.querySelectorAll('button');
@@ -77,50 +168,13 @@ funcButtons.forEach((button) => {
         }
         switch(button.id) {
             case 'equals':
-                if(readyToOperate === true) {
-                    numB = Number(displayString);
-                    if(operator === 'divide' && numB === 0){
-                        alert("Nice try, bud");
-                        numA = null;
-                        numB = null;
-                        operator = '';
-                        displayString = '';
-                        readyToOperate = false;
-                        announce(displayString);
-                    }
-                    else {
-                        displayString = operate(operator, numA, numB);
-                        announce(displayString);
-                        numA = Number(displayString);
-                        numB = null;
-                        operator = '';
-                    }
-                    readyToOperate = false;
-                }
+                runEquals();
                 break;
             case 'clear':
-                numA = null;
-                numB = null;
-                operator = '';
-                displayString = '';
-                readyToOperate = false;
-                announce(displayString);
+                clearEverything();
                 break;
             default:
-                if (readyToOperate === true) {
-                    numB = Number(displayString);
-                    displayString = operate(operator, numA, numB);
-                    announce(displayString);
-                    operator = button.id;
-                    numA = displayString;  
-                    readyToOperate = false;
-                    funcOperate = true;      
-                }
-                else {
-                    numA = Number(displayString);
-                    displayString = '';
-                    operator = button.id;
-                }
+                runOperator(button.id);
         }
     });
 });
