@@ -106,7 +106,7 @@ let readyToOperate = false;
 let funcOperate = false;
 
 const numContainer = document.querySelector('#numbers');
-const numButtons = numContainer.querySelectorAll('button');
+const numButtons = document.querySelectorAll('.numbtn');
 
 
 numButtons.forEach((button) => {
@@ -131,7 +131,7 @@ window.addEventListener('keydown', function (e) {
         displayString = displayString.substr(0, displayString.length - 1);
         announce(displayString);
     }
-    else if(e.key === '=') {
+    else if(e.key === '=' || e.key === 'Enter') {
         if(!(numA === null) && !(displayString === '') && !(operator === '')) {
             readyToOperate = true;
         }
@@ -159,7 +159,7 @@ window.addEventListener('keydown', function (e) {
   });
 
 const funcContainer = document.querySelector('#functioncontainer');
-const funcButtons = funcContainer.querySelectorAll('button');
+const funcButtons = document.querySelectorAll('.funcbtn');
 funcButtons.forEach((button) => {
   
     button.addEventListener('click', (e) => {

@@ -1,40 +1,105 @@
+html {
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto+Slab&display=swap');
+}
+
 body {
+    background: url("background.jpg") no-repeat center center fixed #a17f71;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     background-position: top;
+    font-family: 'Roboto Slab', serif;
 }
 
 #calculator {
-    margin: auto;
-    width: 25%;
-    background-color: #283618;
+    position: fixed;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    top: 100px;
+    left: 100px;
+    width: 350px;
+    height: 600px;
+    background-color: #3e2834;
     padding: 20px;
-    color: #606C38;
+    color: #3e2834;
+
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    box-shadow: -15px -10px 5px 1px rgba(0, 0, 0, 0.5);
 }
 
 #displaycontainer {
-    background-color: #FEFAE0;
-    height: 30px;
+    background-color:#e5d595;
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 1;
+    margin: 1px;
 }
 
 #display {
-    padding: 10px;
+    font-size: 40px;
+    text-align: right;
+    padding-right: 20px;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 button {
     padding: 16px;
-    margin: 10px;
-    font-size: 16px;
+    margin: 1px;
+    font-size: 25px;
     border: none;
     cursor: pointer;
    }
 
-#functioncontainer button {
-    background-color: #BC6C25;
+.funcbtn {
+    background-color: #c1a78c;
 }
 
-#numbers button {
-    background-color: #DDA15E;
+#clear {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;  
+}
+
+#back {
+    grid-column: 3 / span 1;
+    grid-row: 2 / span 1; 
+}
+
+#divide {
+    grid-column: 4 / span 1;
+    grid-row: 2 / span 1;
+}
+
+#multiply {
+    grid-column: 4 / span 1;
+    grid-row: 3 / span 1;
+}
+
+#subtract {
+    grid-column: 4 / span 1;
+    grid-row: 4 / span 1;
+}
+
+#add {
+    grid-column: 4 / span 1;
+    grid-row: 5 / span 1;
+}
+
+#equals {
+    grid-column: 3 / span 2;
+    grid-row: 6 / span 1;
+}
+
+.numbtn {
+    background-color: #a17f71;
+}
+
+h1 {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+#info {
+    position: fixed;
+    right: 50px;
+    top: 400px;
 }
